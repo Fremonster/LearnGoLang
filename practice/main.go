@@ -38,4 +38,11 @@ func main() {
 	fmt.Println(aConst)
 	fmt.Printf("The variable's type is %T\n", aConst)
 
+	// how to create a map - memory allocation
+	// new() allocates but does not initialize memory
+	// make() allocates and initializes memory
+	m := make(map[string]int)
+	m["theAnswer"] = 42
+	fmt.Println(m)
+
 }
