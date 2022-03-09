@@ -19,7 +19,7 @@ func main() {
 	input1, _ := reader.ReadString('\n')
 	float1, err := strconv.ParseFloat(strings.TrimSpace(input1), 64)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Print(err)
 		//custom error message with panic
 		panic("Value 1 must be a number")
 	}
@@ -28,13 +28,59 @@ func main() {
 	input2, _ := reader.ReadString('\n')
 	float2, err := strconv.ParseFloat(strings.TrimSpace(input2), 64)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Print(err)
 		panic("Value 2 must be a number")
 	}
 
-	//:= use to assign value to a new variable, = used to reassign value to an existing variable
-	sum := float1 + float2
-	sum = math.Round(sum*100)/100
-	fmt.Printf("The sum of %v and %v is %v\n\n", float1, float2, sum)
+	fmt.Print("Operation: ")
+	input3, _ := reader.ReadString('\n')
+	input3 = strings.TrimSpace(input3)
+	if !strings.ContainsAny("+-*/", input3) {
+		panic("Please enter a valid math operation: +-* or /")
+	}
 
+	//:= use to assign value to a new variable, = used to reassign value to an existing variable
+	var total float64 = total(float1, float2, input3)
+	fmt.Printf("The total of %v and %v with operation %v is %v\n\n", float1, float2, input3, total)
+
+}
+
+// create 4 functions, one for each of +=*/
+// one function that can handle input for value 1 and value 2
+// should be able to receive value for operation also
+// trim spaces of character and then use switch statement to determine operation
+
+func add(value1 float64, value2 float64) float64 {
+	return value1 + value2
+}
+
+func subtract(value1 float64, value2 float64) float64 {
+	return value1 - value2
+}
+
+func multiply(value1 float64, value2 float64) float64 {
+	return value1 * value2
+}
+
+func divide(value1 float64, value2 float64) float64 {
+	return value1/value2
+}
+
+func total(value1 float64, value2 float64, operation string) float64 {
+	var total float64
+	switch operation {
+	case "+": 
+		total = add(value1, value2)
+	case "-": 
+		total = subtract(value1, value2)	
+	case "*": 
+		total = multiply(value1, value2)
+	case "/": 
+		total = divide(value1, value2)
+	default:
+		total = 0
+		fmt.Println("Input was not a supported operation")	
+	}
+	total = math.Round(total*100)/100
+	return total
 }
