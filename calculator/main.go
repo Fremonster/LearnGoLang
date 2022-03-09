@@ -14,8 +14,8 @@ import (
 
 func main() {
 
-	float1 := getInput("Value 1: ")
-	float2 := getInput("Value 2: ")
+	float1 := getInput("Value 1")
+	float2 := getInput("Value 2")
 	operation := getOperation()
 
 	var total float64 = total(float1, float2, operation)
@@ -26,7 +26,7 @@ func main() {
 var reader = bufio.NewReader(os.Stdin)
 
 func getInput(prompt string) float64 {
-	fmt.Print(prompt)
+	fmt.Print(prompt + ": ")
 	input1, _ := reader.ReadString('\n')
 	float1, err := strconv.ParseFloat(strings.TrimSpace(input1), 64)
 	if err != nil {
