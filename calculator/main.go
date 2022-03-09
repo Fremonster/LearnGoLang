@@ -13,36 +13,39 @@ import (
 // "GOOS="linux" go build" to build for linux
 
 func main() {
-	reader := bufio.NewReader(os.Stdin)
 
-	fmt.Print("Value 1: ")
+	float1 := getInput("Value 1: ")
+	float2 := getInput("Value 2: ")
+	operation := getOperation()
+
+	var total float64 = total(float1, float2, operation)
+	fmt.Printf("The total of %v and %v with operation %v is %v\n\n", float1, float2, operation, total)
+
+}
+
+var reader = bufio.NewReader(os.Stdin)
+
+func getInput(prompt string) float64 {
+	fmt.Print(prompt)
 	input1, _ := reader.ReadString('\n')
 	float1, err := strconv.ParseFloat(strings.TrimSpace(input1), 64)
 	if err != nil {
 		fmt.Print(err)
 		//custom error message with panic
-		panic("Value 1 must be a number")
+		panic("Value must be a number")
 	}
+	return float1
+}
 
-	fmt.Print("Value 2: ")
-	input2, _ := reader.ReadString('\n')
-	float2, err := strconv.ParseFloat(strings.TrimSpace(input2), 64)
-	if err != nil {
-		fmt.Print(err)
-		panic("Value 2 must be a number")
-	}
-
+func getOperation() string {
 	fmt.Print("Operation: ")
-	input3, _ := reader.ReadString('\n')
-	input3 = strings.TrimSpace(input3)
-	if !strings.ContainsAny("+-*/", input3) {
+	operation, _ := reader.ReadString('\n')
+	//:= use to assign value to a new variable, = used to reassign value to an existing variable
+	operation = strings.TrimSpace(operation)
+	if !strings.ContainsAny("+-*/", operation) {
 		panic("Please enter a valid math operation: +-* or /")
 	}
-
-	//:= use to assign value to a new variable, = used to reassign value to an existing variable
-	var total float64 = total(float1, float2, input3)
-	fmt.Printf("The total of %v and %v with operation %v is %v\n\n", float1, float2, input3, total)
-
+	return operation
 }
 
 // create 4 functions, one for each of +=*/
